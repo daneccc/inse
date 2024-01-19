@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 8000
 
-ENTRYPOINT [ "/app/django.sh" ]
+ENTRYPOINT ["/app/django.sh"]
