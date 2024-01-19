@@ -23,5 +23,3 @@ class School(models.Model):
     pc_nivel_6 = models.DecimalField(max_digits=5, decimal_places=2)
     pc_nivel_7 = models.DecimalField(max_digits=5, decimal_places=2)
     pc_nivel_8 = models.DecimalField(max_digits=5, decimal_places=2)
-    
-
