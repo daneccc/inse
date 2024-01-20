@@ -7,7 +7,7 @@ class School(models.Model):
     no_uf = models.CharField(max_length=50)
     co_municipio = models.IntegerField()
     no_municipio = models.CharField(max_length=50)
-    id_escola = models.IntegerField()
+    id_escola = models.IntegerField(primary_key=True)
     no_escola = models.CharField(max_length=150)
     tp_tipo_rede = models.IntegerField()
     tp_localizacao = models.IntegerField()
