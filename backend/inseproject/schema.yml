@@ -1,0 +1,754 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /schools/:
+    get:
+      operationId: schools_list
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
+          description: ''
+    post:
+      operationId: schools_create
+      tags:
+      - schools
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/School'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/School'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/School'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/{id_escola}/:
+    get:
+      operationId: schools_retrieve
+      parameters:
+      - in: path
+        name: id_escola
+        schema:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        description: A unique value identifying this school.
+        required: true
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+    put:
+      operationId: schools_update
+      parameters:
+      - in: path
+        name: id_escola
+        schema:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        description: A unique value identifying this school.
+        required: true
+      tags:
+      - schools
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/School'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/School'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/School'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+    patch:
+      operationId: schools_partial_update
+      parameters:
+      - in: path
+        name: id_escola
+        schema:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        description: A unique value identifying this school.
+        required: true
+      tags:
+      - schools
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSchool'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSchool'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSchool'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+    delete:
+      operationId: schools_destroy
+      parameters:
+      - in: path
+        name: id_escola
+        schema:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        description: A unique value identifying this school.
+        required: true
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /schools/{id_escola}/getSchoolDetail/:
+    get:
+      operationId: schools_getSchoolDetail_retrieve
+      parameters:
+      - in: path
+        name: id_escola
+        schema:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        description: A unique value identifying this school.
+        required: true
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/by-city/{co_municipio}/:
+    get:
+      operationId: schools_by_city_retrieve
+      parameters:
+      - in: path
+        name: co_municipio
+        schema:
+          type: integer
+        required: true
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/by-location/{tp_localizacao}/:
+    get:
+      operationId: schools_by_location_retrieve
+      parameters:
+      - in: path
+        name: tp_localizacao
+        schema:
+          type: integer
+        required: true
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/by-network-type/{tp_tipo_rede}/:
+    get:
+      operationId: schools_by_network_type_retrieve
+      parameters:
+      - in: path
+        name: tp_tipo_rede
+        schema:
+          type: integer
+        required: true
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/by-state/{co_uf}/:
+    get:
+      operationId: schools_by_state_retrieve
+      parameters:
+      - in: path
+        name: co_uf
+        schema:
+          type: integer
+        required: true
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/filtered/:
+    get:
+      operationId: schools_filtered_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getFilteredSchools/:
+    get:
+      operationId: schools_getFilteredSchools_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchoolByCity/:
+    get:
+      operationId: schools_getSchoolByCity_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchoolByLocation/:
+    get:
+      operationId: schools_getSchoolByLocation_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchoolByNetworkType/:
+    get:
+      operationId: schools_getSchoolByNetworkType_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchoolByState/:
+    get:
+      operationId: schools_getSchoolByState_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchools/:
+    get:
+      operationId: schools_getSchools_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchoolsOrderedByAscending/:
+    get:
+      operationId: schools_getSchoolsOrderedByAscending_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchoolsOrderedByDescending/:
+    get:
+      operationId: schools_getSchoolsOrderedByDescending_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchoolsOrderedByStudentsAscending/:
+    get:
+      operationId: schools_getSchoolsOrderedByStudentsAscending_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getSchoolsOrderedByStudentsDescending/:
+    get:
+      operationId: schools_getSchoolsOrderedByStudentsDescending_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/getUniqueUfs/:
+    get:
+      operationId: schools_getUniqueUfs_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/ordered/media-inse/ascending/:
+    get:
+      operationId: schools_ordered_media_inse_ascending_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/ordered/media-inse/descending/:
+    get:
+      operationId: schools_ordered_media_inse_descending_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/ordered/students/ascending/:
+    get:
+      operationId: schools_ordered_students_ascending_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/ordered/students/descending/:
+    get:
+      operationId: schools_ordered_students_descending_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+  /schools/unique-ufs/:
+    get:
+      operationId: schools_unique_ufs_retrieve
+      tags:
+      - schools
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+          description: ''
+components:
+  schemas:
+    PatchedSchool:
+      type: object
+      properties:
+        id_escola:
+          type: integer
+          readOnly: true
+        nu_ano_saeb:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        co_uf:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        sg_uf:
+          type: string
+          maxLength: 50
+        no_uf:
+          type: string
+          maxLength: 50
+        co_municipio:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        no_municipio:
+          type: string
+          maxLength: 50
+        no_escola:
+          type: string
+          maxLength: 150
+        tp_tipo_rede:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        tp_localizacao:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        tp_capital:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        qtd_alunos_inse:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        media_inse:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        inse_classificacao:
+          type: string
+          maxLength: 50
+        pc_nivel_1:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_2:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_3:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_4:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_5:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_6:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_7:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_8:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+    School:
+      type: object
+      properties:
+        id_escola:
+          type: integer
+          readOnly: true
+        nu_ano_saeb:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        co_uf:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        sg_uf:
+          type: string
+          maxLength: 50
+        no_uf:
+          type: string
+          maxLength: 50
+        co_municipio:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        no_municipio:
+          type: string
+          maxLength: 50
+        no_escola:
+          type: string
+          maxLength: 150
+        tp_tipo_rede:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        tp_localizacao:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        tp_capital:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        qtd_alunos_inse:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        media_inse:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        inse_classificacao:
+          type: string
+          maxLength: 50
+        pc_nivel_1:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_2:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_3:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_4:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_5:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_6:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_7:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        pc_nivel_8:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+      required:
+      - co_municipio
+      - co_uf
+      - id_escola
+      - inse_classificacao
+      - media_inse
+      - no_escola
+      - no_municipio
+      - no_uf
+      - nu_ano_saeb
+      - pc_nivel_1
+      - pc_nivel_2
+      - pc_nivel_3
+      - pc_nivel_4
+      - pc_nivel_5
+      - pc_nivel_6
+      - pc_nivel_7
+      - pc_nivel_8
+      - qtd_alunos_inse
+      - sg_uf
+      - tp_capital
+      - tp_localizacao
+      - tp_tipo_rede
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
