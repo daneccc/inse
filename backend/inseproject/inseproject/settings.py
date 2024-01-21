@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'inseapp',
     'rest_framework',
     'drf_spectacular',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'inseproject.urls'
@@ -138,3 +141,7 @@ SPETACULAR_SETTINGS = {
     'Title':'INSE API',
     'DESCRIPTION': 'INSE API',
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]

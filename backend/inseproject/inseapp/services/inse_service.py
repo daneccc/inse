@@ -7,7 +7,7 @@ def order_schools(queryset, order_by):
     return queryset.order_by(order_by)
 
 def get_schools():
-    return School.objects.all()
+    return School.objects.all()[:20]
 
 def get_school_detail(pk):
     try:
