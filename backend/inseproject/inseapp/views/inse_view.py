@@ -1,19 +1,20 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from .models import School
-from .serializers import SchoolSerializer
+from ..models.inse_model import School
+from ..serializers import SchoolSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from inseapp.services.inse_service import *
 
 class InseViewSet(viewsets.ModelViewSet):
-    queryset = School.objects.all()
+    queryset = get_schools()
     serializer_class = SchoolSerializer
 
     @action(detail=False, methods=['GET'])
     def getSchools(self, request):
         try:
-            users = School.objects.all()
+            users = get_schools()
             serializer = SchoolSerializer(users, many=True)
             return Response(serializer.data)
         except Exception as e:
@@ -22,7 +23,7 @@ class InseViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['GET'])
     def getSchoolDetail(self, request, pk=None):
         try:
-            school = School.objects.get(id_escola=pk)
+            school = get_school_detail(pk)
             serializer = SchoolSerializer(school)
             return Response(serializer.data)
         except School.DoesNotExist:
@@ -31,7 +32,7 @@ class InseViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def getSchoolByState(self, request, co_uf=None):
         try:
-            schools = School.objects.filter(co_uf=co_uf)
+            schools = get_schools_by_state(co_uf)
             
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
@@ -45,7 +46,7 @@ class InseViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def getSchoolByCity(self, request, co_municipio=None):
         try:
-            schools = School.objects.filter(co_municipio=co_municipio)
+            schools = get_schools_by_city(co_municipio)
             
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
@@ -59,7 +60,7 @@ class InseViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def getSchoolByNetworkType(self, request, tp_tipo_rede=None):
         try:
-            schools = School.objects.filter(tp_tipo_rede=tp_tipo_rede)
+            schools = get_schools_by_network_type(tp_tipo_rede)
             
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
@@ -73,7 +74,7 @@ class InseViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def getSchoolByLocation(self, request, tp_localizacao=None):
         try:
-            schools = School.objects.filter(tp_localizacao=tp_localizacao)
+            schools = get_schools_by_location(tp_localizacao)
             
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
@@ -104,8 +105,8 @@ class InseViewSet(viewsets.ModelViewSet):
             if tp_localizacao is not None:
                 filters['tp_localizacao'] = tp_localizacao
 
-            # Aplica os filtros ao queryset
-            schools = School.objects.filter(**filters)
+            # Aplica os filtros usando o método centralizado
+            schools = filter_schools(**filters)
 
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
@@ -116,17 +117,16 @@ class InseViewSet(viewsets.ModelViewSet):
         except School.DoesNotExist:
             return Response({"error": "No schools found with the specified filters"}, status=status.HTTP_404_NOT_FOUND)
 
-
     @action(detail=False, methods=['GET'])
-    def getSchoolsOrderedByDescending(self, request):
+    def getSchoolsOrderedByDescending(self, request):   
         try:
             # Obtém todos os objetos escolares ordenados por 'media_inse' de forma descendente
-            schools = School.objects.all().order_by('-media_inse')
-            
+            schools = order_schools(School.objects.all(), '-media_inse')
+
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
                 raise School.DoesNotExist
-            
+
             serializer = SchoolSerializer(schools, many=True)
             return Response(serializer.data)
         except School.DoesNotExist:
@@ -136,7 +136,7 @@ class InseViewSet(viewsets.ModelViewSet):
     def getSchoolsOrderedByAscending(self, request):
         try:
             # Obtém todos os objetos escolares ordenados por 'media_inse' de forma ascendente
-            schools = School.objects.all().order_by('media_inse')
+            schools = order_schools(School.objects.all(), 'media_inse')
             
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
@@ -151,7 +151,7 @@ class InseViewSet(viewsets.ModelViewSet):
     def getSchoolsOrderedByStudentsDescending(self, request):
         try:
             # Obtém todos os objetos escolares ordenados por 'qtd_alunos_inse' de forma descendente
-            schools = School.objects.all().order_by('-qtd_alunos_inse')
+            schools = order_schools(School.objects.all(), '-qtd_alunos_inse')
             
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
@@ -166,7 +166,7 @@ class InseViewSet(viewsets.ModelViewSet):
     def getSchoolsOrderedByStudentsAscending(self, request):
         try:
             # Obtém todos os objetos escolares ordenados por 'qtd_alunos_inse' de forma ascendente
-            schools = School.objects.all().order_by('qtd_alunos_inse')
+            schools = order_schools(School.objects.all(), 'qtd_alunos_inse')
             
             # Verifica se há escolas encontradas no queryset
             if not schools.exists():
@@ -176,3 +176,13 @@ class InseViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         except School.DoesNotExist:
             return Response({"error": "No schools found"}, status=status.HTTP_404_NOT_FOUND)
+        
+    @action(detail=False, methods=['GET'])
+    def getUniqueUfs(self, request):
+        try:
+            # Chama o método do serviço para obter UFs únicas
+            unique_ufs_list = get_unique_ufs()
+
+            return Response(unique_ufs_list)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
