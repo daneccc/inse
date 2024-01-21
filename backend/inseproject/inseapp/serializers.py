@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import School
+from .models import *
 
 class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
