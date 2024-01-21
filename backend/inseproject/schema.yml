@@ -3,6 +3,149 @@ info:
   title: ''
   version: 0.0.0
 paths:
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
   /schools/:
     get:
       operationId: schools_list
@@ -51,6 +194,8 @@ paths:
   /schools/{id_escola}/:
     get:
       operationId: schools_retrieve
+      description: Returns details of a specific school.
+      summary: Get school detail
       parameters:
       - in: path
         name: id_escola
@@ -167,6 +312,8 @@ paths:
   /schools/{id_escola}/getSchoolDetail/:
     get:
       operationId: schools_getSchoolDetail_retrieve
+      description: Returns details of a specific school.
+      summary: Get school detail
       parameters:
       - in: path
         name: id_escola
@@ -191,7 +338,9 @@ paths:
           description: ''
   /schools/by-city/{co_municipio}/:
     get:
-      operationId: schools_by_city_retrieve
+      operationId: schools_by_city_list
+      description: Returns a list of schools based on the specified city code.
+      summary: Get schools by city
       parameters:
       - in: path
         name: co_municipio
@@ -209,11 +358,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/by-location/{tp_localizacao}/:
     get:
-      operationId: schools_by_location_retrieve
+      operationId: schools_by_location_list
+      description: Returns a list of schools based on the specified location type.
+      summary: Get schools by location
       parameters:
       - in: path
         name: tp_localizacao
@@ -231,11 +384,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/by-network-type/{tp_tipo_rede}/:
     get:
-      operationId: schools_by_network_type_retrieve
+      operationId: schools_by_network_type_list
+      description: Returns a list of schools based on the specified network type.
+      summary: Get schools by network type
       parameters:
       - in: path
         name: tp_tipo_rede
@@ -253,11 +410,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/by-state/{co_uf}/:
     get:
-      operationId: schools_by_state_retrieve
+      operationId: schools_by_state_list
+      description: Returns a list of schools based on the specified state code.
+      summary: Get schools by state
       parameters:
       - in: path
         name: co_uf
@@ -275,11 +436,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/filtered/:
     get:
-      operationId: schools_filtered_retrieve
+      operationId: schools_filtered_list
+      description: Returns a list of schools based on the specified filters.
+      summary: Get filtered schools
       tags:
       - schools
       security:
@@ -291,11 +456,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getFilteredSchools/:
     get:
-      operationId: schools_getFilteredSchools_retrieve
+      operationId: schools_getFilteredSchools_list
+      description: Returns a list of schools based on the specified filters.
+      summary: Get filtered schools
       tags:
       - schools
       security:
@@ -307,11 +476,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchoolByCity/:
     get:
-      operationId: schools_getSchoolByCity_retrieve
+      operationId: schools_getSchoolByCity_list
+      description: Returns a list of schools based on the specified city code.
+      summary: Get schools by city
       tags:
       - schools
       security:
@@ -323,11 +496,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchoolByLocation/:
     get:
-      operationId: schools_getSchoolByLocation_retrieve
+      operationId: schools_getSchoolByLocation_list
+      description: Returns a list of schools based on the specified location type.
+      summary: Get schools by location
       tags:
       - schools
       security:
@@ -339,11 +516,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchoolByNetworkType/:
     get:
-      operationId: schools_getSchoolByNetworkType_retrieve
+      operationId: schools_getSchoolByNetworkType_list
+      description: Returns a list of schools based on the specified network type.
+      summary: Get schools by network type
       tags:
       - schools
       security:
@@ -355,11 +536,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchoolByState/:
     get:
-      operationId: schools_getSchoolByState_retrieve
+      operationId: schools_getSchoolByState_list
+      description: Returns a list of schools based on the specified state code.
+      summary: Get schools by state
       tags:
       - schools
       security:
@@ -371,11 +556,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchools/:
     get:
-      operationId: schools_getSchools_retrieve
+      operationId: schools_getSchools_list
+      description: Returns a list of all schools.
+      summary: Get all schools
       tags:
       - schools
       security:
@@ -387,11 +576,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchoolsOrderedByAscending/:
     get:
-      operationId: schools_getSchoolsOrderedByAscending_retrieve
+      operationId: schools_getSchoolsOrderedByAscending_list
+      description: Returns a list of schools ordered by media_inse in ascending order.
+      summary: Get schools ordered by ascending media_inse
       tags:
       - schools
       security:
@@ -403,11 +596,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchoolsOrderedByDescending/:
     get:
-      operationId: schools_getSchoolsOrderedByDescending_retrieve
+      operationId: schools_getSchoolsOrderedByDescending_list
+      description: Returns a list of schools ordered by media_inse in descending order.
+      summary: Get schools ordered by descending media_inse
       tags:
       - schools
       security:
@@ -419,11 +616,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchoolsOrderedByStudentsAscending/:
     get:
-      operationId: schools_getSchoolsOrderedByStudentsAscending_retrieve
+      operationId: schools_getSchoolsOrderedByStudentsAscending_list
+      description: Returns a list of schools ordered by qtd_alunos_inse in ascending
+        order.
+      summary: Get schools ordered by ascending qtd_alunos_inse
       tags:
       - schools
       security:
@@ -435,11 +637,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getSchoolsOrderedByStudentsDescending/:
     get:
-      operationId: schools_getSchoolsOrderedByStudentsDescending_retrieve
+      operationId: schools_getSchoolsOrderedByStudentsDescending_list
+      description: Returns a list of schools ordered by qtd_alunos_inse in descending
+        order.
+      summary: Get schools ordered by descending qtd_alunos_inse
       tags:
       - schools
       security:
@@ -451,7 +658,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/getUniqueUfs/:
     get:
@@ -471,7 +680,9 @@ paths:
           description: ''
   /schools/ordered/media-inse/ascending/:
     get:
-      operationId: schools_ordered_media_inse_ascending_retrieve
+      operationId: schools_ordered_media_inse_ascending_list
+      description: Returns a list of schools ordered by media_inse in ascending order.
+      summary: Get schools ordered by ascending media_inse
       tags:
       - schools
       security:
@@ -483,11 +694,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/ordered/media-inse/descending/:
     get:
-      operationId: schools_ordered_media_inse_descending_retrieve
+      operationId: schools_ordered_media_inse_descending_list
+      description: Returns a list of schools ordered by media_inse in descending order.
+      summary: Get schools ordered by descending media_inse
       tags:
       - schools
       security:
@@ -499,11 +714,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/ordered/students/ascending/:
     get:
-      operationId: schools_ordered_students_ascending_retrieve
+      operationId: schools_ordered_students_ascending_list
+      description: Returns a list of schools ordered by qtd_alunos_inse in ascending
+        order.
+      summary: Get schools ordered by ascending qtd_alunos_inse
       tags:
       - schools
       security:
@@ -515,11 +735,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/ordered/students/descending/:
     get:
-      operationId: schools_ordered_students_descending_retrieve
+      operationId: schools_ordered_students_descending_list
+      description: Returns a list of schools ordered by qtd_alunos_inse in descending
+        order.
+      summary: Get schools ordered by descending qtd_alunos_inse
       tags:
       - schools
       security:
@@ -531,7 +756,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/School'
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
           description: ''
   /schools/unique-ufs/:
     get:

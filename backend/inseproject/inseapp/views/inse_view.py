@@ -6,11 +6,17 @@ from ..serializers import SchoolSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from inseapp.services.inse_service import *
+from drf_spectacular.utils import extend_schema
 
 class InseViewSet(viewsets.ModelViewSet):
     queryset = get_schools()
     serializer_class = SchoolSerializer
 
+    @extend_schema(
+        summary="Get all schools",
+        description="Returns a list of all schools.",
+        responses={200: SchoolSerializer(many=True)}
+    )
     @action(detail=False, methods=['GET'])
     def getSchools(self, request):
         try:
@@ -19,7 +25,12 @@ class InseViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+
+    @extend_schema(
+        summary="Get school detail",
+        description="Returns details of a specific school.",
+        responses={200: SchoolSerializer()}
+    )    
     @action(detail=True, methods=['GET'])
     def getSchoolDetail(self, request, pk=None):
         try:
@@ -28,7 +39,12 @@ class InseViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         except School.DoesNotExist:
                 return Response({"error": "School not found"}, status=status.HTTP_404_NOT_FOUND)
-        
+    
+    @extend_schema(
+        summary="Get schools by state",
+        description="Returns a list of schools based on the specified state code.",
+        responses={200: SchoolSerializer(many=True)}
+    )
     @action(detail=False, methods=['GET'])
     def getSchoolByState(self, request, co_uf=None):
         try:
@@ -42,7 +58,12 @@ class InseViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         except School.DoesNotExist:
             return Response({"error": "State not found"}, status=status.HTTP_404_NOT_FOUND)
-        
+
+    @extend_schema(
+        summary="Get schools by city",
+        description="Returns a list of schools based on the specified city code.",
+        responses={200: SchoolSerializer(many=True)}
+    ) 
     @action(detail=False, methods=['GET'])
     def getSchoolByCity(self, request, co_municipio=None):
         try:
@@ -56,7 +77,12 @@ class InseViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         except School.DoesNotExist:
             return Response({"error": "City not found"}, status=status.HTTP_404_NOT_FOUND)
-                
+
+    @extend_schema(
+        summary="Get schools by network type",
+        description="Returns a list of schools based on the specified network type.",
+        responses={200: SchoolSerializer(many=True)}
+    )        
     @action(detail=False, methods=['GET'])
     def getSchoolByNetworkType(self, request, tp_tipo_rede=None):
         try:
@@ -71,6 +97,12 @@ class InseViewSet(viewsets.ModelViewSet):
         except School.DoesNotExist:
             return Response({"error": "Network type not found"}, status=status.HTTP_404_NOT_FOUND)
         
+
+    @extend_schema(
+        summary="Get schools by location",
+        description="Returns a list of schools based on the specified location type.",
+        responses={200: SchoolSerializer(many=True)}
+    )
     @action(detail=False, methods=['GET'])
     def getSchoolByLocation(self, request, tp_localizacao=None):
         try:
@@ -85,6 +117,11 @@ class InseViewSet(viewsets.ModelViewSet):
         except School.DoesNotExist:
             return Response({"error": "Location not found"}, status=status.HTTP_404_NOT_FOUND)
 
+    @extend_schema(
+        summary="Get filtered schools",
+        description="Returns a list of schools based on the specified filters.",
+        responses={200: SchoolSerializer(many=True)}
+    )
     @action(detail=False, methods=['GET'])
     def getFilteredSchools(self, request):
         try:
@@ -117,6 +154,11 @@ class InseViewSet(viewsets.ModelViewSet):
         except School.DoesNotExist:
             return Response({"error": "No schools found with the specified filters"}, status=status.HTTP_404_NOT_FOUND)
 
+    @extend_schema(
+        summary="Get schools ordered by descending media_inse",
+        description="Returns a list of schools ordered by media_inse in descending order.",
+        responses={200: SchoolSerializer(many=True)}
+    )
     @action(detail=False, methods=['GET'])
     def getSchoolsOrderedByDescending(self, request):   
         try:
@@ -132,6 +174,11 @@ class InseViewSet(viewsets.ModelViewSet):
         except School.DoesNotExist:
             return Response({"error": "No schools found"}, status=status.HTTP_404_NOT_FOUND)
 
+    @extend_schema(
+        summary="Get schools ordered by ascending media_inse",
+        description="Returns a list of schools ordered by media_inse in ascending order.",
+        responses={200: SchoolSerializer(many=True)}
+    )
     @action(detail=False, methods=['GET'])
     def getSchoolsOrderedByAscending(self, request):
         try:
@@ -147,6 +194,11 @@ class InseViewSet(viewsets.ModelViewSet):
         except School.DoesNotExist:
             return Response({"error": "No schools found"}, status=status.HTTP_404_NOT_FOUND)
         
+    @extend_schema(
+        summary="Get schools ordered by descending qtd_alunos_inse",
+        description="Returns a list of schools ordered by qtd_alunos_inse in descending order.",
+        responses={200: SchoolSerializer(many=True)}
+    )
     @action(detail=False, methods=['GET'])
     def getSchoolsOrderedByStudentsDescending(self, request):
         try:
@@ -162,6 +214,11 @@ class InseViewSet(viewsets.ModelViewSet):
         except School.DoesNotExist:
             return Response({"error": "No schools found"}, status=status.HTTP_404_NOT_FOUND)
 
+    @extend_schema(
+        summary="Get schools ordered by ascending qtd_alunos_inse",
+        description="Returns a list of schools ordered by qtd_alunos_inse in ascending order.",
+        responses={200: SchoolSerializer(many=True)}
+    )
     @action(detail=False, methods=['GET'])
     def getSchoolsOrderedByStudentsAscending(self, request):
         try:
@@ -176,7 +233,8 @@ class InseViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         except School.DoesNotExist:
             return Response({"error": "No schools found"}, status=status.HTTP_404_NOT_FOUND)
-        
+
+
     @action(detail=False, methods=['GET'])
     def getUniqueUfs(self, request):
         try:

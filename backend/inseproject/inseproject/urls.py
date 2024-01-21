@@ -3,6 +3,7 @@ from django.urls import path, include
 from inseapp.views import inse_view
 from rest_framework import routers
 from django.urls import include
+from drf_spectacular.views import SpectacularAPIView,SpectacularSwaggerView
 
 router = routers.DefaultRouter()
 router.register('schools', inse_view.InseViewSet)
@@ -30,5 +31,7 @@ urlpatterns = [
          name='schools-ordered-students-ascending'),
     path('schools/unique-ufs/', inse_view.InseViewSet.as_view({'get': 'getUniqueUfs'}),
          name='unique-ufs-list'),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/docs/', SpectacularSwaggerView.as_view(url_name='schema')),
 ]

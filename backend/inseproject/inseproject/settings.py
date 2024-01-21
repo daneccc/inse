@@ -135,6 +135,6 @@ REST_FRAMEWORK = {
 }
 
 SPETACULAR_SETTINGS = {
-    'Title':'INSE',
-     
+    'Title':'INSE API',
+    'DESCRIPTION': 'INSE API',
 }
